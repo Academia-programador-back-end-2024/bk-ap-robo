@@ -2,7 +2,7 @@
 
 A Agência Espacial Brasileira (AEB) está realizando uma missão de exploração em uma área retangular, onde robôs devem percorrer o terreno enquanto registram informações. Cada robô é representado por uma posição composta por coordenadas X e Y, juntamente com uma letra representando a direção que ele está enfrentando. As orientações são as seguintes: 
 
--N: norte
+- N: norte
 - S: sul
 - L: leste
 - O: oeste
