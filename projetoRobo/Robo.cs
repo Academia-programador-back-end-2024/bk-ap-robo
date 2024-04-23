@@ -51,6 +51,8 @@ namespace projetoRobo
             "\nPosicao X: " + this.posX +
             "\nPosicao Y: " + this.posY +
             "\nDirecao: " + direc);
+
+            mp.mostraMapa();
         }
 
         public void alteraDirecao(char novaDirecao)
@@ -84,9 +86,10 @@ namespace projetoRobo
             switch (this.direcao)
             {
                 case 0:
-                    if(this.posY < this.maxY)
+                    if(this.posY <= this.maxY)
                     {
                         this.posY++;
+                        mp.inserePosicao(this.posX, this.posY);
                     } else
                     {
                         Console.WriteLine("Nao e possivel andar mais para a direcao " + verificaDirecao());
@@ -94,9 +97,10 @@ namespace projetoRobo
                     break;
 
                 case 2:
-                    if(this.posY > this.minY)
+                    if(this.posY >= this.minY)
                     {
                         this.posY--;
+                        mp.inserePosicao(this.posX, this.posY);
                     } else
                     {
                         Console.WriteLine("Nao e possivel andar mais para a direcao " + verificaDirecao());
@@ -104,9 +108,10 @@ namespace projetoRobo
                     break;
 
                 case 1:
-                    if (this.posX < this.maxX)
+                    if (this.posX <= this.maxX)
                     {
                         this.posX++;
+                        mp.inserePosicao(this.posX, this.posY);
                     }
                     else
                     {
@@ -115,9 +120,10 @@ namespace projetoRobo
                     break;
 
                 case 3:
-                    if (this.posX > this.minX)
+                    if (this.posX >= this.minX)
                     {
                         this.posX--;
+                        mp.inserePosicao(this.posX, this.posY);
                     }
                     else
                     {
@@ -127,8 +133,7 @@ namespace projetoRobo
                 default:
                     break;
             }
-
-            mp.inserePosicao(this.posX, this.posY);
+            mp.mostraMapa();
         }
 
         public void inputComando(char comando)
@@ -165,7 +170,9 @@ namespace projetoRobo
         {
             foreach (char c in comandos)
             {
+                Console.Clear();
                 inputComando(c);
+                Thread.Sleep(1000);
             }
         }
     }

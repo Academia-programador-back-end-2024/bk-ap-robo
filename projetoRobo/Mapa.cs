@@ -18,16 +18,16 @@ namespace projetoRobo
             {
                 for (int j = 0; j < y; j++)
                 {
-                    matrizMapa[i, j] = "  ";
+                    matrizMapa[i, j] = "x";
                 }
             }
         }
 
         public void inserePosicao(int x, int y)
         {
-            matrizMapa[x, y] = " " + Convert.ToString(passo) + " ";
+            matrizMapa[y, x] = "" + Convert.ToString(passo) + "";
+            
             passo++;
-            mostraMapa();
         }
 
         public void mostraMapa() {
