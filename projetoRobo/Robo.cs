@@ -8,6 +8,8 @@ namespace projetoRobo
 {
     internal class Robo
     {
+        Mapa mp = new Mapa();
+
         public int posX;
         public int posY;
         public int maxX;
@@ -15,6 +17,8 @@ namespace projetoRobo
         public int direcao;
         public int minX = 0;
         public int minY = 0;
+
+
 
         /* guia direção do robo
          * 0 = norte
@@ -59,7 +63,9 @@ namespace projetoRobo
             //realiza um split no parametro recebido separando por espaços
             string[] tamMapa = mapa.Split(' ');
             //insere o tamanho do mapa convertendo para int
-            this.maxX = Convert.ToInt16(tamMapa[0]);
+            mp.inicializaMapa(Convert.ToInt16(tamMapa[0]), Convert.ToInt16(tamMapa[1]));
+
+            this.maxY = Convert.ToInt16(tamMapa[1]);
             this.maxY = Convert.ToInt16(tamMapa[1]);
         }
 
@@ -121,6 +127,8 @@ namespace projetoRobo
                 default:
                     break;
             }
+
+            mp.inserePosicao(this.posX, this.posY);
         }
 
         public void inputComando(char comando)

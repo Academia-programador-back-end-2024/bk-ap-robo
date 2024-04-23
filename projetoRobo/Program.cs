@@ -3,10 +3,6 @@
     internal class Program
     {
 
-        static void criaRobo(int quant)
-        {
-
-        }
         static void Main(string[] args)
         {
             Robo roboUm = new();
