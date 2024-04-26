@@ -1,12 +1,31 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.CompilerServices;
+const char norte = 'N';
+const char sul = 'S';
+const char leste = 'L';
+const char oeste = '0';
+const char direita = 'D';
+const char esquerda = 'E';
+const char mover = 'M';
 
+string comando = "EMEMEMEMM";
+char posicao = 'N';
 int x, y, quantidade;
 string tamanho; 
-Console.WriteLine("Informe o tamanho do plano de coordenadas (formato: X Y)");
-tamanho = Console.ReadLine();                                          
-x = int.Parse(tamanho[0].ToString());
-y = int.Parse(tamanho[2].ToString());
+
+Console.WriteLine("Informe o tamanho do plano de coordenadas (formato: X Y):");
+string coordenadas = Console.ReadLine();
+string[] coordenadasXeY = coordenadas.Split(' ');
+if (coordenadasXeY.Length != 2)
+{
+    Console.WriteLine("Coordenadas invalida!");
+    return;
+}
+
+x = Convert.ToInt16(coordenadasXeY[0]);
+y = Convert.ToInt16(coordenadasXeY[1]);
+
 
 int[,] mapa = new int[x,y];
 
@@ -46,4 +65,109 @@ for (int i = 0; i < mapa.GetLength(0); i++)
     Console.Write("\n");
 
 }
+
+foreach (var item in comando)
+{
+    Console.Clear();
+    if (item == esquerda)
+    {
+        switch (posicao)
+        {
+            case norte:
+                posicao = oeste;
+
+                break;
+            case sul:
+                posicao = leste;
+
+                break;
+            case leste:
+                posicao = norte;
+
+                break;
+            case oeste:
+                posicao = sul;
+
+                break;
+            default:
+
+                break;
+        }
+    }
+    else if (item == direita)
+    {
+        switch (posicao)
+        {
+            case norte:
+                posicao = leste;
+
+                break;
+            case sul:
+                posicao = oeste;
+
+                break;
+            case leste:
+                posicao = sul;
+
+                break;
+            case oeste:
+                posicao = norte;
+
+                break;
+            default:
+
+                break;
+        }
+    }
+    else if (item == mover)
+    {
+        switch (posicao)
+        {
+            case norte:
+                mapa[x, y] = 0;
+                x = x + 1;
+                mapa[x, y] = 1;
+
+               
+                break;
+            case sul:
+                mapa[x, y] = 0;
+                x = x - 1;
+                mapa[x, y] = 1;
+                break;
+            case leste:
+                mapa[x, y] = 0;
+                y = y + 1;
+                mapa[x, y] = 1;
+                break;
+            case oeste:
+                mapa[x, y] = 0;
+                y = y - 1;
+                mapa[x, y] = 1;
+                break;
+            default:
+
+                break;
+
+        }
+        Console.Write("\n");
+
+        for (int l = 0; l < mapa.GetLength(0); l++)
+        {
+            for (int j = 0; j < mapa.GetLength(1); j++)
+            {
+                Console.Write(mapa[l, j]);
+                Console.Write(" ");
+            }
+            Console.Write("\n");
+
+        }
+    }
+    Thread.Sleep(1000);
+}
+  
+
+
+
+
 
