@@ -1,6 +1,7 @@
 ## Desafio: Atividade Robô Tupiniquim
 
-A Agência Espacial Brasileira (AEB) está realizando uma missão de exploração em uma área retangular, onde robôs devem percorrer o terreno enquanto registram informações. Cada robô é representado por uma posição composta por coordenadas X e Y, juntamente com uma letra representando a direção que ele está enfrentando. As orientações são as seguintes: 
+A Agência Espacial Brasileira (AEB) está realizando uma missão de exploração em uma área retangular, onde robôs devem percorrer o terreno enquanto registram informações. 
+Cada robô é representado por uma posição composta por coordenadas X e Y, juntamente com uma letra representando a direção que ele está enfrentando. As orientações são as seguintes: 
 
 - N: norte
 - S: sul
@@ -13,7 +14,8 @@ Para controlar o movimento dos robôs, a AEB envia sequências de comandos simpl
 - D: girar 90 graus para a direita (sem mover)
 - M: mover uma posição para frente no grid, mantendo a mesma direção
 
-Ao mover o robô para frente, ele se desloca de uma posição (X, Y) para (X, Y+1). Por exemplo, se um robô está na posição (0,0) com a face para o norte, ao executar um comando 'M', ele se moverá para (0,1).
+Ao mover o robô para frente, ele se desloca de uma posição (X, Y) para (X, Y+1). Por exemplo, se um robô está na posição (0,0) com a face para o norte, ao executar um comando 'M',
+ele se moverá para (0,1).
 
 ### Funcionalidades do programa:
 
