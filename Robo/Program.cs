@@ -16,6 +16,7 @@
 
         static void Main(string[] args)
         {
+
             Console.WriteLine("Informe o tamanho do plano de coordenadas (formato: X Y):");
             string coordenadas = Console.ReadLine();
             string[] coordenadasXeY = coordenadas.Split(' ');
@@ -62,14 +63,13 @@
 
         }
 
-        private static void DadosIniciarRobo(int roboIndice, out int roboPosicaoInicialX, out int roboPosicaoInicialY)
+        private static void DadosIniciarRobo(
+            int roboIndice,
+            out int roboPosicaoInicialX,
+            out int roboPosicaoInicialY)
         {
-            Console.WriteLine(@$"
-Robô {roboIndice}:
-Informe a posição inicial e a direção (formato: X Y D):");
-
+            Console.WriteLine($"Robô {roboIndice}: Informe a posição inicial e a direção (formato: X Y D):");
             string[] posicaoInicialRobo = Console.ReadLine().ToUpper().Split(' ');
-
             roboPosicaoInicialX = Convert.ToInt32(posicaoInicialRobo[0]);
             roboPosicaoInicialY = Convert.ToInt32(posicaoInicialRobo[1]);
             roboDirecao = posicaoInicialRobo[2][0];
