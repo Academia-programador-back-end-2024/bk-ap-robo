@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+
 const char norte = 'N';
 const char sul = 'S';
 const char leste = 'L';
@@ -9,25 +10,18 @@ const char direita = 'D';
 const char esquerda = 'E';
 const char mover = 'M';
 
-string comando = "EMEMEMEMM";
-char posicao = 'N';
-int x, y, quantidade;
-string tamanho; 
+string comando;
+char posicao = ' ';
+int x = 0, y = 0, quantidade;
+string tamanho;
 
 Console.WriteLine("Informe o tamanho do plano de coordenadas (formato: X Y):");
 string coordenadas = Console.ReadLine();
-string[] coordenadasXeY = coordenadas.Split(' ');
-if (coordenadasXeY.Length != 2)
-{
-    Console.WriteLine("Coordenadas invalida!");
-    return;
-}
-
-x = Convert.ToInt16(coordenadasXeY[0]);
-y = Convert.ToInt16(coordenadasXeY[1]);
+Posicao(coordenadas, ref x, ref y, ref posicao);
 
 
-int[,] mapa = new int[x,y];
+
+int[,] mapa = new int[x, y];
 
 for (int i = 0; i < mapa.GetLength(0); i++)
 {
@@ -37,38 +31,18 @@ for (int i = 0; i < mapa.GetLength(0); i++)
     }
 }
 
-//Console.WriteLine("Informe a quantdade de robos");
-//quantidade = int.Parse(Console.ReadLine());
-
 Console.WriteLine("Posição do Robo (formato: X Y Z)");
 string posicaoRobo = Console.ReadLine();
-x = int.Parse(posicaoRobo[0].ToString());
-y = int.Parse(posicaoRobo[2].ToString());
+Posicao(posicaoRobo, ref x, ref y, ref posicao);
 
-// Verifica se as coordenadas do robô estão dentro dos limites do mapa
-if (x < mapa.GetLength(0) && y < mapa.GetLength(1))
-{
-    mapa[x, y] = 1;
-}
-else
-{
-    Console.WriteLine("Coordenadas do robô estão fora dos limites do mapa.");
-}
 
-for (int i = 0; i < mapa.GetLength(0); i++)
-{
-    for (int j = 0; j < mapa.GetLength(1); j++)
-    {
-        Console.Write(mapa[i, j]);
-        Console.Write(" ");
-    }
-    Console.Write("\n");
+ValidaCoordenada(x, y, mapa);
 
-}
+Console.WriteLine("Escreva o comando");
+comando = Console.ReadLine();
 
 foreach (var item in comando)
 {
-    Console.Clear();
     if (item == esquerda)
     {
         switch (posicao)
@@ -128,7 +102,7 @@ foreach (var item in comando)
                 x = x + 1;
                 mapa[x, y] = 1;
 
-               
+
                 break;
             case sul:
                 mapa[x, y] = 0;
@@ -163,11 +137,39 @@ foreach (var item in comando)
 
         }
     }
-    Thread.Sleep(1000);
+    Thread.Sleep(500);
 }
-  
 
+static void Posicao(string coordenadas, ref int x, ref int y, ref char posicao)
+{
+    string[] coordenadasXeY = coordenadas.Split(' ');
+    x = Convert.ToInt16(coordenadasXeY[0]);
+    y = Convert.ToInt16(coordenadasXeY[1]);
+    if (coordenadasXeY.Length >= 3 && !string.IsNullOrEmpty(coordenadasXeY[2]))
+    {
+        posicao = Convert.ToChar(coordenadasXeY[2]);
+    }
+}
 
+static void ValidaCoordenada(int x, int y, int[,] mapa)
+{
+    if (x < mapa.GetLength(0) && y < mapa.GetLength(1))
+    {
+        mapa[x, y] = 1;
+    }
+    else
+    {
+        Console.WriteLine("Coordenadas do robô estão fora dos limites do mapa.");
+    }
 
+    for (int i = 0; i < mapa.GetLength(0); i++)
+    {
+        for (int j = 0; j < mapa.GetLength(1); j++)
+        {
+            Console.Write(mapa[i, j]);
+            Console.Write(" ");
+        }
+        Console.Write("\n");
 
-
+    }
+}
