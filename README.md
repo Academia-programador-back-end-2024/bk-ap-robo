@@ -37,7 +37,7 @@ ele se moverá para (0,1).
 Suponha que a área retangular tenha dimensões 5x5 e dois robôs devem ser controlados. As coordenadas iniciais e as ordens de movimento são as seguintes:
 
 - Robô 1: Posição inicial (1, 2, N), com comandos "EMEMEMEMM"
-- Robô 2: Posição inicial (3, 3, L), com comandos "MMRMMRMRRM"
+- Robô 2: Posição inicial (3, 3, L), com comandos "MMDMMDMDDM"
 
 Após a execução das ordens de movimento, a posição final de cada robô será:
 
