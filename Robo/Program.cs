@@ -2,46 +2,20 @@
 {
     internal class Program
     {
+        const char NORTE = 'N';// Para cima
+        const char SUL = 'S';//Para baixo
+        const char LESTE = 'L';//Para direita
+        const char OESTE = 'O';//Para esquerda
+
+        const char ESQUERDA = 'E';
+        const char DIREITA = 'D';
+        const char MOVER = 'M';
+
+        static char roboDirecao = ' ';
+
+
         static void Main(string[] args)
         {
-
-            /*Informe o tamanho do plano de coordenadas (formato: X Y):
-5 5
-Informe o número de robôs:
-2
-Robô 1:
-Informe a posição inicial e a direção (formato: X Y D):
-1 2 N
-Informe as ordens de movimento (formato: E, D ou M):
-EMEMEMEMM
-Robô 2:
-Informe a posição inicial e a direção (formato: X Y D):
-3 3 L
-Informe as ordens de movimento (formato: E, D ou M):
-MMDMMDMDDM
-Posição final do robô 1: 1,3,N
-Posição final do robô 2: 5,1,L
-                
-- N: norte
-- S: sul
-- L: leste
-- O: oeste
-
-//Comandos
-- E: girar 90 graus para a esquerda (sem mover)
-- D: girar 90 graus para a direita (sem mover)
-- M: mover uma posição para frente no grid, mantendo a mesma direção
-            */
-
-            const char NORTE = 'N';// Para cima
-            const char SUL = 'S';//Para baixo
-            const char LESTE = 'L';//Para direita
-            const char OESTE = 'O';//Para esquerda
-
-            const char ESQUERDA = 'E';
-            const char DIREITA = 'D';
-            const char MOVER = 'M';
-
 
             Console.WriteLine("Informe o tamanho do plano de coordenadas (formato: X Y):");
             string coordenadas = Console.ReadLine();
@@ -59,94 +33,26 @@ Posição final do robô 2: 5,1,L
             int numeroDeRobos = Convert.ToInt32(Console.ReadLine());
             string[] resultados = new string[numeroDeRobos];
 
+
             for (int roboIndice = 1; roboIndice <= numeroDeRobos; roboIndice++)
             {
-                Console.WriteLine(@$"
-Robô {roboIndice}:
-Informe a posição inicial e a direção (formato: X Y D):");
-                string[] posicaoInicialRobo = Console.ReadLine().ToUpper().Split(' ');
-
-                int roboPosicaoInicialX = Convert.ToInt32(posicaoInicialRobo[0]);
-                int roboPosicaoInicialY = Convert.ToInt32(posicaoInicialRobo[1]);
-                char roboDirecao = posicaoInicialRobo[2][0];
+                int roboPosicaoInicialX, roboPosicaoInicialY;
+                DadosIniciarRobo(roboIndice, out roboPosicaoInicialX, out roboPosicaoInicialY);
 
                 Console.WriteLine("Informe as ordens de movimento (formato: E, D ou M):");
                 string roboMovimentos = Console.ReadLine().ToUpper();
 
                 foreach (char comando in roboMovimentos)
                 {
-                    if (comando == ESQUERDA)//- E: girar 90 graus para a esquerda (sem mover) 
-                    {
-                        if (roboDirecao == NORTE)
-                        {
-                            roboDirecao = OESTE;
-                        }
-                        else if (roboDirecao == OESTE)
-                        {
-                            roboDirecao = SUL;
-                        }
-                        else if (roboDirecao == SUL)
-                        {
-                            roboDirecao = LESTE;
-                        }
-                        else if (roboDirecao == LESTE)
-                        {
-                            roboDirecao = NORTE;
-                        }
-                    }
-                    else if (comando == DIREITA)//-  D: girar 90 graus para a direita (sem mover)
-                    {
-                        if (roboDirecao == NORTE)
-                        {
-                            roboDirecao = LESTE;
-                        }
-                        else if (roboDirecao == OESTE)
-                        {
-                            roboDirecao = NORTE;
-                        }
-                        else if (roboDirecao == SUL)
-                        {
-                            roboDirecao = OESTE;
-                        }
-                        else if (roboDirecao == LESTE)
-                        {
-                            roboDirecao = SUL;
-                        }
-                    }
-                    else if (comando == MOVER)//M: mover uma posição para frente no grid, mantendo a mesma direção
-                    {
-                        if (roboDirecao == NORTE)
-                        {
-                            if (roboPosicaoInicialY < planoY)
-                            {
-                                roboPosicaoInicialY++;
-                            }
-                        }
-                        else if (roboDirecao == OESTE)
-                        {
-                            if (roboPosicaoInicialX > -planoX)
-                            {
-                                roboPosicaoInicialX--;
-                            }
-                        }
-                        else if (roboDirecao == SUL)
-                        {
-                            if (roboPosicaoInicialY > -planoY)
-                            {
-                                roboPosicaoInicialY--;
-                            }
-                        }
-                        else if (roboDirecao == LESTE)
-                        {
-                            if (roboPosicaoInicialX < planoX)
-                            {
-                                roboPosicaoInicialX++;
-                            }
-                        }
-                    }
+                    ProcessarComando(
+                        planoX,
+                        planoY,
+                        ref roboPosicaoInicialX,
+                        ref roboPosicaoInicialY,
+                        comando);
                 }
                 string posicaoFinalRobo = $"Posição final do robô {roboIndice}: {roboPosicaoInicialX},{roboPosicaoInicialY},{roboDirecao}";
-                resultados[roboIndice] = posicaoFinalRobo;
+                resultados[roboIndice - 1] = posicaoFinalRobo;
             }
 
             foreach (var posicaoFinalRobo in resultados)
@@ -155,6 +61,119 @@ Informe a posição inicial e a direção (formato: X Y D):");
             }
 
 
+        }
+
+        private static void DadosIniciarRobo(
+            int roboIndice,
+            out int roboPosicaoInicialX,
+            out int roboPosicaoInicialY)
+        {
+            Console.WriteLine($"Robô {roboIndice}: Informe a posição inicial e a direção (formato: X Y D):");
+            string[] posicaoInicialRobo = Console.ReadLine().ToUpper().Split(' ');
+            roboPosicaoInicialX = Convert.ToInt32(posicaoInicialRobo[0]);
+            roboPosicaoInicialY = Convert.ToInt32(posicaoInicialRobo[1]);
+            roboDirecao = posicaoInicialRobo[2][0];
+        }
+
+        private static void ProcessarComando(
+            int planoX,
+            int planoY,
+            ref int roboPosicaoInicialX,
+            ref int roboPosicaoInicialY,
+            char comando)
+        {
+            switch (comando)
+            {
+                case ESQUERDA:
+                    roboDirecao = RotacionarEsquera(roboDirecao);
+                    break;
+                case DIREITA:
+                    roboDirecao = RotacionarDireita(roboDirecao);
+                    break;
+                case MOVER:
+                    Mover(planoX, planoY, ref roboPosicaoInicialX, ref roboPosicaoInicialY, roboDirecao);
+                    break;
+            }
+        }
+
+        private static char RotacionarEsquera(char roboDirecao)
+        {
+            switch (roboDirecao)
+            {
+                case NORTE:
+                    roboDirecao = OESTE;
+                    break;
+                case OESTE:
+                    roboDirecao = SUL;
+                    break;
+                case SUL:
+                    roboDirecao = LESTE;
+                    break;
+                case LESTE:
+                    roboDirecao = NORTE;
+                    break;
+            }
+            return roboDirecao;
+        }
+
+        /// <summary>
+        /// Rotacionar eixo robo , girar 90 graus para a direita (sem mover)
+        /// </summary>
+        /// <param name="roboDirecao">Posição que está apontando</param>
+        /// <returns></returns>
+        private static char RotacionarDireita(
+            char roboDirecao
+            )
+        {
+            switch (roboDirecao)
+            {
+                case NORTE:
+                    roboDirecao = LESTE;
+                    break;
+                case OESTE:
+                    roboDirecao = NORTE;
+                    break;
+                case SUL:
+                    roboDirecao = OESTE;
+                    break;
+                case LESTE:
+                    roboDirecao = SUL;
+                    break;
+            }
+            return roboDirecao;
+        }
+
+        //M: mover uma posição para frente no grid, mantendo a mesma direção
+        private static void Mover(
+            int planoX,
+            int planoY,
+            ref int roboPosicaoInicialX,
+            ref int roboPosicaoInicialY,
+            char roboDirecao)
+        {
+            if (roboDirecao == NORTE && (roboPosicaoInicialY < planoY))
+            {
+                roboPosicaoInicialY++;
+                return;
+            }
+
+            if (roboDirecao == OESTE && (roboPosicaoInicialX > -planoX))
+            {
+                roboPosicaoInicialX--;
+                return;
+            }
+
+            if (roboDirecao == SUL && (roboPosicaoInicialY > -planoY))
+            {
+                roboPosicaoInicialY--;
+                return;
+            }
+
+            if (roboDirecao == LESTE && (roboPosicaoInicialX < planoX))
+            {
+                roboPosicaoInicialX++;
+                return;
+            }
         }
     }
 }

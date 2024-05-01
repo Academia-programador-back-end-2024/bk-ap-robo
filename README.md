@@ -56,7 +56,7 @@ Robô 2:
 Informe a posição inicial e a direção (formato: X Y D):
 3 3 L
 Informe as ordens de movimento (formato: E, D ou M):
-MMRMMRMRRM
+MMDMMDMDDM
 Posição final do robô 1: 1,3,N
 Posição final do robô 2: 5,1,L
 ``` 
